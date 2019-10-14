@@ -249,12 +249,12 @@ func (engine *Engine) addRoute(method, path string, handlers HandlersChain) {
 	assert1(len(handlers) > 0, "there must be at least one handler")
 
 	debugPrintRoute(method, path, handlers)
-	root := engine.trees.get(method) //根据method在树里面找root这棵树，结构体是node
-	if root == nil {//如果为空
+	root := engine.trees.get(method) //找到method的这个小树，并返回这棵树的根节点（node结构体）
+	if root == nil {//如果为空，那么我就是这棵小树的第一个节点。
 		root = new(node) //go 自带的new函数，新生成一个node结构体
 		engine.trees = append(engine.trees, methodTree{method: method, root: root}) //trees是一个数组，即每一个method都有一个tree
 	}
-	root.addRoute(path, handlers) //httprouter中构造基数树的核心方法是addRoute, 其公共方法Get, Post只是对addRoute的一个调用
+	root.addRoute(path, handlers) //把。httprouter中构造基数树的核心方法是addRoute, 其公共方法Get, Post只是对addRoute的一个调用
 }
 
 // Routes returns a slice of registered routes, including some useful information, such as:

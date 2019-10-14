@@ -38,9 +38,9 @@ type IRoutes interface {  //要实现全部才能成为相同的interface
 
 // RouterGroup is used internally to configure router, a RouterGroup is associated with
 // a prefix and an array of handlers (middleware).
-type RouterGroup struct {
-	Handlers HandlersChain  //midleware表示的函数会填进来
-	basePath string  //路由路径，相对于子路由的上级路径
+type RouterGroup struct { //这个结构体相当于存取所有的路由的公共部分。
+	Handlers HandlersChain  //midleware表示的函数会填进来。比如所有路由都要经历的中间件函数
+	basePath string  //路由路径，相对于子路由的上级路径，也就是分组的路径。所有路由都要经历的group路径
 	engine   *Engine  //父节点路由的Engine实体
 	root     bool  //是否为根节点路由
 }

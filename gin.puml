@@ -1,0 +1,759 @@
+@startuml
+namespace github.com\\gin_gonic\\gin {
+ class authPair {
+  -value string
+  -user string
+
+} 
+}
+namespace github.com\\gin_gonic\\gin\\binding {
+ class defaultValidator {
+  -once sync.Once
+  -validate *validator.Validate
++ValidateStruct(interface  { })error
++Engine()interface  { }
+-lazyinit()
+
+} 
+}
+namespace github.com\\gin_gonic\\gin\\binding {
+ class formBinding {
++Name()string
++Bind(*net/http.Request,interface  { })error
+
+} 
+}
+namespace github.com\\gin_gonic\\gin\\binding {
+ class formPostBinding {
++Name()string
++Bind(*net/http.Request,interface  { })error
+
+} 
+}
+namespace github.com\\gin_gonic\\gin\\binding {
+ class formMultipartBinding {
++Name()string
++Bind(*net/http.Request,interface  { })error
+
+} 
+}
+namespace github.com\\gin_gonic\\gin\\binding {
+ class jsonBinding {
++Name()string
++Bind(*net/http.Request,interface  { })error
++BindBody([]byte,interface  { })error
+
+} 
+}
+namespace github.com\\gin_gonic\\gin\\binding {
+ class msgpackBinding {
++Name()string
++Bind(*net/http.Request,interface  { })error
++BindBody([]byte,interface  { })error
+
+} 
+}
+namespace github.com\\gin_gonic\\gin\\binding {
+ class protobufBinding {
++Name()string
++Bind(*net/http.Request,interface  { })error
++BindBody([]byte,interface  { })error
+
+} 
+}
+namespace github.com\\gin_gonic\\gin\\binding {
+ class queryBinding {
++Name()string
++Bind(*net/http.Request,interface  { })error
+
+} 
+}
+namespace github.com\\gin_gonic\\gin\\binding {
+ class xmlBinding {
++Name()string
++Bind(*net/http.Request,interface  { })error
++BindBody([]byte,interface  { })error
+
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ class Context {
+  -writermem responseWriter
+  +Request *http.Request
+  +Writer ResponseWriter<font color=red>========>interface</font>
+  +Params Params
+  -handlers HandlersChain
+  -index int8
+  -engine *Engine
+  +Keys <font color=blue>map[string]interface  { }</font>
+  +Errors errorMsgs
+  +Accepted []string
+-reset()
++Copy()*github.com/gin-gonic/gin.Context
++HandlerName()string
++Handler()HandlerFunc
++Next()
++IsAborted()bool
++Abort()
++AbortWithStatus(int)
++AbortWithStatusJSON(int,interface  { })
++AbortWithError(int,error)*github.com/gin-gonic/gin.Error
++Error(error)*github.com/gin-gonic/gin.Error
++Set(string,interface  { })
++Get(string)(interface  { },bool)
++MustGet(string)interface  { }
++GetString(string)string
++GetBool(string)bool
++GetInt(string)int
++GetInt64(string)int64
++GetFloat64(string)float64
++GetTime(string)time.Time
++GetDuration(string)time.Duration
++GetStringSlice(string)[]string
++GetStringMap(string)<font color=blue>map[string]interface  { }</font>
++GetStringMapString(string)<font color=blue>map[string]string</font>
++GetStringMapStringSlice(string)<font color=blue>map[string][]string</font>
++Param(string)string
++Query(string)string
++DefaultQuery(string,string)string
++GetQuery(string)(string,bool)
++QueryArray(string)[]string
++GetQueryArray(string)([]string,bool)
++QueryMap(string)<font color=blue>map[string]string</font>
++GetQueryMap(string)(<font color=blue>map[string]string</font>,bool)
++PostForm(string)string
++DefaultPostForm(string,string)string
++GetPostForm(string)(string,bool)
++PostFormArray(string)[]string
++GetPostFormArray(string)([]string,bool)
++PostFormMap(string)<font color=blue>map[string]string</font>
++GetPostFormMap(string)(<font color=blue>map[string]string</font>,bool)
+-get(<font color=blue>map[string][]string</font>,string)(<font color=blue>map[string]string</font>,bool)
++FormFile(string)(*mime/multipart.FileHeader,error)
++MultipartForm()(*mime/multipart.Form,error)
++SaveUploadedFile(*mime/multipart.FileHeader,string)error
++Bind(interface  { })error
++BindJSON(interface  { })error
++BindXML(interface  { })error
++BindQuery(interface  { })error
++MustBindWith(interface  { },github.com/gin-gonic/gin/binding.Binding)error
++ShouldBind(interface  { })error
++ShouldBindJSON(interface  { })error
++ShouldBindXML(interface  { })error
++ShouldBindQuery(interface  { })error
++ShouldBindWith(interface  { },github.com/gin-gonic/gin/binding.Binding)error
++ShouldBindBodyWith(interface  { },github.com/gin-gonic/gin/binding.BindingBody)error
++ClientIP()string
++ContentType()string
++IsWebsocket()bool
+-requestHeader(string)string
++Status(int)
++Header(string,string)
++GetHeader(string)string
++GetRawData()([]byte,error)
++SetCookie(string,string,int,string,string,bool,bool)
++Cookie(string)(string,error)
++Render(int,github.com/gin-gonic/gin/render.Render)
++HTML(int,string,interface  { })
++IndentedJSON(int,interface  { })
++SecureJSON(int,interface  { })
++JSONP(int,interface  { })
++JSON(int,interface  { })
++AsciiJSON(int,interface  { })
++XML(int,interface  { })
++YAML(int,interface  { })
++ProtoBuf(int,interface  { })
++String(int,string,... interface  { })
++Redirect(int,string)
++Data(int,string,[]byte)
++DataFromReader(int,int64,string,io.Reader,<font color=blue>map[string]string</font>)
++File(string)
++SSEvent(string,interface  { })
++Stream(func(-w io.Writer)bool)
++Negotiate(int,github.com/gin-gonic/gin.Negotiate)
++NegotiateFormat(... string)string
++SetAccepted(... string)
++Deadline()(time.Time,bool)
++Done()chan struct {  }
++Err()error
++Value(interface  { })interface  { }
++PureJSON(int,interface  { })
++BindWith(interface  { },github.com/gin-gonic/gin/binding.Binding)error
+
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ class Negotiate {
+  +Offered []string
+  +HTMLName string
+  +HTMLData interface  { }
+  +JSONData interface  { }
+  +XMLData interface  { }
+  +Data interface  { }
+%!!(string=-incrementChildPrio(int)int
+-addRoute(string,HandlersChain)
+-insertChild(uint8,string,string,HandlersChain)
+-getValue(string,Params,bool)(HandlersChain,Params,bool)
+-findCaseInsensitivePath(string,bool)([]byte,bool)
+)!(string=)!(string=)!(string=+Reset()
++String()string
++ProtoMessage()
++GetRequiredField()string
+)!(string=+Reset()
++String()string
++ProtoMessage()
++GetLabel()string
++GetType()int32
++GetReps()[]int64
++GetOptionalgroup()*github.com/gin-gonic/gin/testdata/protoexample.Test_OptionalGroup
+)!(string=+Use(... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
++Group(string,... HandlerFunc)*github.com/gin-gonic/gin.RouterGroup
++BasePath()string
+-handle(string,string,HandlersChain)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
++Handle(string,string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
++POST(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
++GET(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
++DELETE(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
++PATCH(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
++PUT(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
++OPTIONS(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
++HEAD(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
++Any(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
++StaticFile(string,string)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
++Static(string,string)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
++StaticFS(string,net/http.FileSystem)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
+-createStaticHandler(string,net/http.FileSystem)HandlerFunc
+-combineHandlers(HandlersChain)HandlersChain
+-calculateAbsolutePath(string)string
+-returnObj()github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
+)!(string=-reset(net/http.ResponseWriter)
++WriteHeader(int)
++WriteHeaderNow()
++Write([]byte)(int,error)
++WriteString(string)(int,error)
++Status()int
++Size()int
++Written()bool
++Hijack()(net.Conn,*bufio.ReadWriter,error)
++CloseNotify()chan bool
++Flush()
++Pusher()net/http.Pusher
+)!(string=+Render(net/http.ResponseWriter)error
++WriteContentType(net/http.ResponseWriter)
+)!(string=+Render(net/http.ResponseWriter)error
++WriteContentType(net/http.ResponseWriter)
+)!(string=+Render(net/http.ResponseWriter)error
++WriteContentType(net/http.ResponseWriter)
+)!(string=+Render(net/http.ResponseWriter)error
++WriteContentType(net/http.ResponseWriter)
+)!(string=+Render(net/http.ResponseWriter)error
++WriteContentType(net/http.ResponseWriter)
+-writeHeaders(net/http.ResponseWriter,<font color=blue>map[string]string</font>)
+)!(string=+Render(net/http.ResponseWriter)error
++WriteContentType(net/http.ResponseWriter)
+)!(string=+WriteContentType(net/http.ResponseWriter)
++Render(net/http.ResponseWriter)error
+)!(string=+Render(net/http.ResponseWriter)error
++WriteContentType(net/http.ResponseWriter)
+)!(string=+Render(net/http.ResponseWriter)error
++WriteContentType(net/http.ResponseWriter)
+)!(string=+Render(net/http.ResponseWriter)error
++WriteContentType(net/http.ResponseWriter)
+)!(string=+Render(net/http.ResponseWriter)error
++WriteContentType(net/http.ResponseWriter)
+)!(string=+Render(net/http.ResponseWriter)error
++WriteContentType(net/http.ResponseWriter)
+)!(string=+Render(net/http.ResponseWriter)error
++WriteContentType(net/http.ResponseWriter)
+)!(string=+Render(net/http.ResponseWriter)error
++WriteContentType(net/http.ResponseWriter)
+)!(string=+Instance(string,interface  { })github.com/gin-gonic/gin/render.Render<font color=red>========>interface</font>
+-loadTemplate()*html/template.Template
+)!(string=+Instance(string,interface  { })github.com/gin-gonic/gin/render.Render<font color=red>========>interface</font>
+)!(string=)!(string=+Render(net/http.ResponseWriter)error
++WriteContentType(net/http.ResponseWriter)
+)!(string=-allocateContext()*github.com/gin-gonic/gin.Context
++Delims(string,string)*github.com/gin-gonic/gin.Engine
++SecureJsonPrefix(string)*github.com/gin-gonic/gin.Engine
++LoadHTMLGlob(string)
++LoadHTMLFiles(... string)
++SetHTMLTemplate(*html/template.Template)
++SetFuncMap(html/template.FuncMap)
++NoRoute(... HandlerFunc)
++NoMethod(... HandlerFunc)
++Use(... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
+-rebuild404Handlers()
+-rebuild405Handlers()
+-addRoute(string,string,HandlersChain)
++Routes()RoutesInfo
++Run(... string)error
++RunTLS(string,string,string)error
++RunUnix(string)error
++ServeHTTP(net/http.ResponseWriter,*net/http.Request)
++HandleContext(*github.com/gin-gonic/gin.Context)
+-handleHTTPRequest(*github.com/gin-gonic/gin.Context)
+)!(string=)!(string=+Readdir(int)([]os.FileInfo,error)
+)!(string=+Open(string)(net/http.File,error)
+)!(string=)!(string=+SayHello(golang.org/x/net/context.Context,*github.com/gin-gonic/gin/examples/grpc/pb.HelloRequest,... google.golang.org/grpc.CallOption)(*github.com/gin-gonic/gin/examples/grpc/pb.HelloReply,error)
+)!(string=+Reset()
++String()string
++ProtoMessage()
++Descriptor()([]byte,[]int)
+)!(string=+Reset()
++String()string
++ProtoMessage()
++Descriptor()([]byte,[]int)
+)!(string=+SayHello(context.Context,*github.com/gin-gonic/gin/examples/grpc/pb.HelloRequest)(*github.com/gin-gonic/gin/examples/grpc/pb.HelloReply,error)
+)!(string=)!(string=+SetType(ErrorType)*github.com/gin-gonic/gin.Error
++SetMeta(interface  { })*github.com/gin-gonic/gin.Error
++JSON()interface  { }
++MarshalJSON()([]byte,error)
++Error()string
++IsType(ErrorType)bool
+)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ class Error {
+  +Err error
+  +Type ErrorType
+  +Meta interface  { }
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\examples\\custom_validation {
+ class Booking {
+  +CheckIn time.Time
+  +CheckOut time.Time
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\examples\\grpc\\grpc {
+ class server {
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\examples\\grpc\\pb {
+ class HelloRequest {
+  +Name string
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\examples\\grpc\\pb {
+ class HelloReply {
+  +Message string
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\examples\\grpc\\pb {
+ class greeterClient {
+  -cc *grpc.ClientConn
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\examples\\struct_lvl_validations {
+ class User {
+  +FirstName string
+  +LastName string
+  +Email string
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ class onlyfilesFS {
+  -fs http.FileSystem
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ class neuteredReaddirFile {
+  http.File
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ class RouteInfo {
+  +Method string
+  +Path string
+  +Handler string
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ class Engine {
+  RouterGroup
+  +RedirectTrailingSlash bool
+  +RedirectFixedPath bool
+  +HandleMethodNotAllowed bool
+  +ForwardedByClientIP bool
+  +AppEngine bool
+  +UseRawPath bool
+  +UnescapePathValues bool
+  +MaxMultipartMemory int64
+  -delims render.Delims
+  -secureJsonPrefix string
+  +HTMLRender render.HTMLRender
+  +FuncMap template.FuncMap
+  -allNoRoute HandlersChain
+  -allNoMethod HandlersChain
+  -noRoute HandlersChain
+  -noMethod HandlersChain
+  -pool sync.Pool
+  -trees methodTrees
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class Data {
+  +ContentType string
+  +Data []byte
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class Delims {
+  +Left string
+  +Right string
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class HTMLProduction {
+  +Template *template.Template
+  +Delims Delims
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class HTMLDebug {
+  +Files []string
+  +Glob string
+  +Delims Delims
+  +FuncMap template.FuncMap
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class HTML {
+  +Template *template.Template
+  +Name string
+  +Data interface  { }
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class JSON {
+  +Data interface  { }
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class IndentedJSON {
+  +Data interface  { }
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class SecureJSON {
+  +Prefix string
+  +Data interface  { }
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class JsonpJSON {
+  +Callback string
+  +Data interface  { }
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class AsciiJSON {
+  +Data interface  { }
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class PureJSON {
+  +Data interface  { }
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class MsgPack {
+  +Data interface  { }
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class ProtoBuf {
+  +Data interface  { }
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class Reader {
+  +ContentType string
+  +ContentLength int64
+  +Reader io.Reader
+  +Headers <font color=blue>map[string]string</font>
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class Redirect {
+  +Code int
+  +Request *http.Request
+  +Location string
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class String {
+  +Format string
+  +Data []interface  { }
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class XML {
+  +Data interface  { }
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ class YAML {
+  +Data interface  { }
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ class responseWriter {
+  http.ResponseWriter
+  -size int
+  -status int
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ class RouterGroup {
+  +Handlers HandlersChain
+  -basePath string
+  -engine *Engine
+  -root bool
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\testdata\\protoexample {
+ class Test {
+  +Label *string
+  +Type *int32
+  +Reps []int64
+  +Optionalgroup *Test_OptionalGroup
+  +XXX_unrecognized []byte
+%!!(MISSING)!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\testdata\\protoexample {
+ class Test_OptionalGroup {
+  +RequiredField *string
+  +XXX_unrecognized []byte
+%!!(MISSING)!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ class Param {
+  +Key string
+  +Value string
+%!!(MISSING)!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ class methodTree {
+  -method string
+  -root *node
+%!!(MISSING)s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ class node {
+  -path string
+  -indices string
+  -children []*node
+  -handlers HandlersChain
+  -priority uint32
+  -nType nodeType
+  -maxParams uint8
+  -wildChild bool
+%!s(MISSING)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\binding {
+ interface Binding  {
+  Name()string
+  Bind(*http.Request,interface  { })error
+} 
+}
+namespace github.com\\gin_gonic\\gin\\binding {
+ interface BindingBody  {
+  BindBody([]byte,interface  { })error
+} 
+}
+namespace github.com\\gin_gonic\\gin\\binding {
+ interface StructValidator  {
+  ValidateStruct(interface  { })error
+  Engine()interface  { }
+} 
+}
+namespace github.com\\gin_gonic\\gin\\examples\\grpc\\pb {
+ interface GreeterClient  {
+  SayHello(-ctx context.Context,-in *HelloRequest,-opts ... grpc.CallOption)(*HelloReply,error)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\examples\\grpc\\pb {
+ interface GreeterServer  {
+  SayHello(context.Context,*HelloRequest)(*HelloReply,error)
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ interface HTMLRender  {
+  Instance(string,interface  { })Render<font color=red>========>interface</font>
+} 
+}
+namespace github.com\\gin_gonic\\gin\\render {
+ interface Render  {
+  Render(http.ResponseWriter)error
+  WriteContentType(-w http.ResponseWriter)
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ interface responseWriterBase  {
+  Status()int
+  Size()int
+  WriteString(string)(int,error)
+  Written()bool
+  WriteHeaderNow()
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ interface ResponseWriter  {
+  Pusher()http.Pusher
+} 
+}
+
+namespace github.com\\gin_gonic\\gin {
+ interface IRouter  {
+  Group(string,... HandlerFunc)*RouterGroup
+} 
+}
+namespace github.com\\gin_gonic\\gin {
+ interface IRoutes  {
+  Use(... HandlerFunc)IRoutes<font color=red>========>interface</font>
+  Handle(string,string,... HandlerFunc)IRoutes<font color=red>========>interface</font>
+  Any(string,... HandlerFunc)IRoutes<font color=red>========>interface</font>
+  GET(string,... HandlerFunc)IRoutes<font color=red>========>interface</font>
+  POST(string,... HandlerFunc)IRoutes<font color=red>========>interface</font>
+  DELETE(string,... HandlerFunc)IRoutes<font color=red>========>interface</font>
+  PATCH(string,... HandlerFunc)IRoutes<font color=red>========>interface</font>
+  PUT(string,... HandlerFunc)IRoutes<font color=red>========>interface</font>
+  OPTIONS(string,... HandlerFunc)IRoutes<font color=red>========>interface</font>
+  HEAD(string,... HandlerFunc)IRoutes<font color=red>========>interface</font>
+  StaticFile(string,string)IRoutes<font color=red>========>interface</font>
+  Static(string,string)IRoutes<font color=red>========>interface</font>
+  StaticFS(string,http.FileSystem)IRoutes<font color=red>========>interface</font>
+} 
+}
+github.com\\gin_gonic\\gin.Context ---> github.com\\gin_gonic\\gin.responseWriter : writermem
+github.com\\gin_gonic\\gin.Context ---> github.com\\gin_gonic\\gin.Engine : engine
+github.com\\gin_gonic\\gin.Engine -|> github.com\\gin_gonic\\gin.RouterGroup
+github.com\\gin_gonic\\gin.Engine ---> github.com\\gin_gonic\\gin\\render.Delims : delims
+github.com\\gin_gonic\\gin\\render.HTMLProduction ---> github.com\\gin_gonic\\gin\\render.Delims : Delims
+github.com\\gin_gonic\\gin\\render.HTMLDebug ---> github.com\\gin_gonic\\gin\\render.Delims : Delims
+github.com\\gin_gonic\\gin.RouterGroup ---> github.com\\gin_gonic\\gin.Engine : engine
+github.com\\gin_gonic\\gin\\testdata\\protoexample.Test ---> github.com\\gin_gonic\\gin\\testdata\\protoexample.Test_OptionalGroup : Optionalgroup
+github.com\\gin_gonic\\gin.methodTree ---> github.com\\gin_gonic\\gin.node : root
+github.com\\gin_gonic\\gin.node ---> "*" github.com\\gin_gonic\\gin.node : children
+github.com\\gin_gonic\\gin\\binding.Binding <|- github.com\\gin_gonic\\gin\\binding.formBinding
+github.com\\gin_gonic\\gin\\binding.Binding <|- github.com\\gin_gonic\\gin\\binding.formPostBinding
+github.com\\gin_gonic\\gin\\binding.Binding <|- github.com\\gin_gonic\\gin\\binding.formMultipartBinding
+github.com\\gin_gonic\\gin\\binding.Binding <|- github.com\\gin_gonic\\gin\\binding.jsonBinding
+github.com\\gin_gonic\\gin\\binding.Binding <|- github.com\\gin_gonic\\gin\\binding.msgpackBinding
+github.com\\gin_gonic\\gin\\binding.Binding <|- github.com\\gin_gonic\\gin\\binding.protobufBinding
+github.com\\gin_gonic\\gin\\binding.Binding <|- github.com\\gin_gonic\\gin\\binding.queryBinding
+github.com\\gin_gonic\\gin\\binding.Binding <|- github.com\\gin_gonic\\gin\\binding.xmlBinding
+github.com\\gin_gonic\\gin\\binding.BindingBody <|- github.com\\gin_gonic\\gin\\binding.jsonBinding
+github.com\\gin_gonic\\gin\\binding.BindingBody <|- github.com\\gin_gonic\\gin\\binding.msgpackBinding
+github.com\\gin_gonic\\gin\\binding.BindingBody <|- github.com\\gin_gonic\\gin\\binding.protobufBinding
+github.com\\gin_gonic\\gin\\binding.BindingBody <|- github.com\\gin_gonic\\gin\\binding.xmlBinding
+github.com\\gin_gonic\\gin\\binding.StructValidator <|- github.com\\gin_gonic\\gin\\binding.defaultValidator
+github.com\\gin_gonic\\gin\\examples\\grpc\\pb.GreeterClient <|- github.com\\gin_gonic\\gin\\examples\\grpc\\pb.greeterClient
+github.com\\gin_gonic\\gin\\render.HTMLRender <|- github.com\\gin_gonic\\gin\\render.HTMLProduction
+github.com\\gin_gonic\\gin\\render.HTMLRender <|- github.com\\gin_gonic\\gin\\render.HTMLDebug
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.Data
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.HTML
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.JSON
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.IndentedJSON
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.SecureJSON
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.JsonpJSON
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.AsciiJSON
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.PureJSON
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.MsgPack
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.ProtoBuf
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.Reader
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.Redirect
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.String
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.XML
+github.com\\gin_gonic\\gin\\render.Render <|- github.com\\gin_gonic\\gin\\render.YAML
+github.com\\gin_gonic\\gin.responseWriterBase <|- github.com\\gin_gonic\\gin.responseWriter
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin.responseWriter
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin.authPair
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\binding.defaultValidator
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\binding.formBinding
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\binding.formPostBinding
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\binding.formMultipartBinding
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\binding.jsonBinding
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\binding.msgpackBinding
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\binding.protobufBinding
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\binding.queryBinding
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\binding.xmlBinding
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin.Context
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin.Negotiate
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin.Error
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\examples\\custom_validation.Booking
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\examples\\grpc\\grpc.server
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\examples\\grpc\\pb.HelloRequest
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\examples\\grpc\\pb.HelloReply
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\examples\\grpc\\pb.greeterClient
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\examples\\struct_lvl_validations.User
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin.onlyfilesFS
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin.neuteredReaddirFile
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin.RouteInfo
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin.Engine
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.Data
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.Delims
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.HTMLProduction
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.HTMLDebug
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.HTML
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.JSON
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.IndentedJSON
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.SecureJSON
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.JsonpJSON
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.AsciiJSON
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.PureJSON
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.MsgPack
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.ProtoBuf
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.Reader
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.Redirect
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.String
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.XML
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\render.YAML
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin.responseWriter
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin.RouterGroup
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\testdata\\protoexample.Test
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin\\testdata\\protoexample.Test_OptionalGroup
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin.Param
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin.methodTree
+github.com\\gin_gonic\\gin.ResponseWriter <|- github.com\\gin_gonic\\gin.node
+github.com\\gin_gonic\\gin.IRouter <|- github.com\\gin_gonic\\gin.RouterGroup
+github.com\\gin_gonic\\gin.IRoutes <|- github.com\\gin_gonic\\gin.RouterGroup
+@enduml

@@ -47,7 +47,7 @@ type methodTree struct {
 type methodTrees []methodTree
 
 func (trees methodTrees) get(method string) *node {
-	for _, tree := range trees {
+	for _, tree := range trees { //trees上有GET，POST等不同的小树，每棵小树上都是相同method的路由和处理函数的节点。
 		if tree.method == method {
 			return tree.root
 		}
@@ -90,12 +90,12 @@ const (
 
 //通过基数树可以提高字符顺序匹配的效率，对于URL之类的字符使用基数树来进行归类、匹配非常适合
 type node struct { //基数树节点的定义
-	path      string // 每个节点的匹配路径，  // 节点路径，比如上面的s，earch，和upport
+	path      string // 每个节点的匹配路径，  // 节点路径，比如上面的s，earch，和upport，是每个节点的，而不是一整个路径
 	indices   string
 	// indices保存节点与子节点的分裂的第一个字符
 	// 如aboutme，与aboutteam两个路径，同属于about节点，但是后续会跟随me， team两个子节点
 	// 此时indices就是"mt"
-	children  []*node //// 子节点
+	children  []*node // 子节点
 	handlers  HandlersChain  // http请求处理方法，算上中间件的函数就有多个方法。
 	priority  uint32// 节点权重（子节点的handler总数），这是httprouter为提高查找性能做的优化
 	nType     nodeType
@@ -105,7 +105,7 @@ type node struct { //基数树节点的定义
 	// param： 参数节点(:)
 	// catchAll：以*匹配的接口
 	maxParams uint8 // 节点路径的最大参数个数
-	wildChild bool //是否为参数节点(path中包含*,:)
+	wildChild bool //是否为参数节点(path中包含*,:) 子节点是否为通配符
 }
 
 // increments priority of the given child and reorders if necessary.
