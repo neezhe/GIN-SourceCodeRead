@@ -4,7 +4,8 @@ import (
 	"log"
 	"net"
 
-	pb "github.com/gin-gonic/gin/examples/grpc/pb"
+	pb "gin/examples/grpc/pb"
+
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"

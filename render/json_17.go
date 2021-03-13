@@ -9,7 +9,7 @@ package render
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin/internal/json"
+	"gin/internal/json"
 )
 
 // PureJSON contains the given interface object.

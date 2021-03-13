@@ -5,8 +5,9 @@ import (
 	"reflect"
 	"time"
 
-	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
+	"gin"
+	"gin/binding"
+
 	"gopkg.in/go-playground/validator.v8"
 )
 

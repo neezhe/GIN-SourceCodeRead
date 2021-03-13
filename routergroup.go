@@ -18,7 +18,7 @@ type IRouter interface {
 }
 
 // Iroutes defins all router handle interface.
-type IRoutes interface {  //要实现全部才能成为相同的interface
+type IRoutes interface { //要实现全部才能成为相同的interface
 	Use(...HandlerFunc) IRoutes
 
 	Handle(string, string, ...HandlerFunc) IRoutes
@@ -39,10 +39,10 @@ type IRoutes interface {  //要实现全部才能成为相同的interface
 // RouterGroup is used internally to configure router, a RouterGroup is associated with
 // a prefix and an array of handlers (middleware).
 type RouterGroup struct { //这个结构体相当于存取所有的路由的公共部分。
-	Handlers HandlersChain  //midleware表示的函数会填进来。比如所有路由都要经历的中间件函数
-	basePath string  //路由路径，相对于子路由的上级路径，也就是分组的路径。所有路由都要经历的group路径
-	engine   *Engine  //父节点路由的Engine实体
-	root     bool  //是否为根节点路由
+	Handlers HandlersChain //midleware表示的函数会填进来。比如所有路由都要经历的中间件函数
+	basePath string        //路由路径，相对于子路由的上级路径，也就是分组的路径。所有路由都要经历的group路径
+	engine   *Engine       //父节点路由的Engine实体
+	root     bool          //是否为根节点路由
 }
 
 var _ IRouter = &RouterGroup{}
@@ -73,10 +73,10 @@ func (group *RouterGroup) BasePath() string {
 }
 
 func (group *RouterGroup) handle(httpMethod, relativePath string, handlers HandlersChain) IRoutes {
-	absolutePath := group.calculateAbsolutePath(relativePath) //1.取得监听器（handler函数）所监听路由的绝对完整路径,基本路径加上相对路径
+	absolutePath := group.calculateAbsolutePath(relativePath) //1.因为路由分组的时候，会根据一个路由来划分
 	//下面的操作就导致了下面的变量handlers中为[中间件函数，noRouter函数,路由对应的处理函数]
-	handlers = group.combineHandlers(handlers) //2.将group也就是父类下所有的监听器（handler函数）和我们传进来的函数指针合并返回后放到handlers中，应该是添加了中间件的那些函数
-	group.engine.addRoute(httpMethod, absolutePath, handlers)//3.将所得到的信息（包括所有的函数指针）添加到父节点中，并返回。把新路由加入树中，每个方法是一个树的根节点
+	handlers = group.combineHandlers(handlers)                //2.将group也就是父类下所有的监听器（handler函数）和我们传进来的函数指针合并返回后放到handlers中，应该是添加了中间件的那些函数
+	group.engine.addRoute(httpMethod, absolutePath, handlers) //3.将所得到的信息（包括所有的函数指针）添加到父节点中，并返回。把新路由加入树中，每个方法是一个树的根节点
 	return group.returnObj()
 }
 
@@ -205,7 +205,7 @@ func (group *RouterGroup) combineHandlers(handlers HandlersChain) HandlersChain 
 		panic("too many handlers")
 	}
 	mergedHandlers := make(HandlersChain, finalSize)
-	copy(mergedHandlers, group.Handlers)  //从两个copy的顺序可以看出，group的handler高于自定义的handler。中间件是属于groupHandlers的
+	copy(mergedHandlers, group.Handlers) //从两个copy的顺序可以看出，group的handler高于自定义的handler。中间件是属于groupHandlers的
 	copy(mergedHandlers[len(group.Handlers):], handlers)
 	return mergedHandlers
 }
@@ -216,7 +216,7 @@ func (group *RouterGroup) calculateAbsolutePath(relativePath string) string {
 
 func (group *RouterGroup) returnObj() IRoutes { //无论是返回engine还是group，他们都属于IRoutes类型，因为他们属于父子，所以只要父类实现了IRoutes中的所有方法，就相当于子类也实现了（即继承）。
 	if group.root { //在执行r.Group之前，也就是在进行路由分组之前，此处是true
-		return group.engine
+		return group.engine //路由分组就返回这个
 	}
-	return group  //路由分组后，返回这个。
+	return group //路由分组后，返回这个。
 }

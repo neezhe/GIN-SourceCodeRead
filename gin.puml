@@ -89,7 +89,7 @@ namespace github.com\\gin_gonic\\gin {
   +Errors errorMsgs
   +Accepted []string
 -reset()
-+Copy()*github.com/gin-gonic/gin.Context
++Copy()*gin.Context
 +HandlerName()string
 +Handler()HandlerFunc
 +Next()
@@ -97,8 +97,8 @@ namespace github.com\\gin_gonic\\gin {
 +Abort()
 +AbortWithStatus(int)
 +AbortWithStatusJSON(int,interface  { })
-+AbortWithError(int,error)*github.com/gin-gonic/gin.Error
-+Error(error)*github.com/gin-gonic/gin.Error
++AbortWithError(int,error)*gin.Error
++Error(error)*gin.Error
 +Set(string,interface  { })
 +Get(string)(interface  { },bool)
 +MustGet(string)interface  { }
@@ -136,13 +136,13 @@ namespace github.com\\gin_gonic\\gin {
 +BindJSON(interface  { })error
 +BindXML(interface  { })error
 +BindQuery(interface  { })error
-+MustBindWith(interface  { },github.com/gin-gonic/gin/binding.Binding)error
++MustBindWith(interface  { },gin/binding.Binding)error
 +ShouldBind(interface  { })error
 +ShouldBindJSON(interface  { })error
 +ShouldBindXML(interface  { })error
 +ShouldBindQuery(interface  { })error
-+ShouldBindWith(interface  { },github.com/gin-gonic/gin/binding.Binding)error
-+ShouldBindBodyWith(interface  { },github.com/gin-gonic/gin/binding.BindingBody)error
++ShouldBindWith(interface  { },gin/binding.Binding)error
++ShouldBindBodyWith(interface  { },gin/binding.BindingBody)error
 +ClientIP()string
 +ContentType()string
 +IsWebsocket()bool
@@ -153,7 +153,7 @@ namespace github.com\\gin_gonic\\gin {
 +GetRawData()([]byte,error)
 +SetCookie(string,string,int,string,string,bool,bool)
 +Cookie(string)(string,error)
-+Render(int,github.com/gin-gonic/gin/render.Render)
++Render(int,gin/render.Render)
 +HTML(int,string,interface  { })
 +IndentedJSON(int,interface  { })
 +SecureJSON(int,interface  { })
@@ -170,7 +170,7 @@ namespace github.com\\gin_gonic\\gin {
 +File(string)
 +SSEvent(string,interface  { })
 +Stream(func(-w io.Writer)bool)
-+Negotiate(int,github.com/gin-gonic/gin.Negotiate)
++Negotiate(int,gin.Negotiate)
 +NegotiateFormat(... string)string
 +SetAccepted(... string)
 +Deadline()(time.Time,bool)
@@ -178,7 +178,7 @@ namespace github.com\\gin_gonic\\gin {
 +Err()error
 +Value(interface  { })interface  { }
 +PureJSON(int,interface  { })
-+BindWith(interface  { },github.com/gin-gonic/gin/binding.Binding)error
++BindWith(interface  { },gin/binding.Binding)error
 
 } 
 }
@@ -205,27 +205,27 @@ namespace github.com\\gin_gonic\\gin {
 +GetLabel()string
 +GetType()int32
 +GetReps()[]int64
-+GetOptionalgroup()*github.com/gin-gonic/gin/testdata/protoexample.Test_OptionalGroup
-)!(string=+Use(... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
-+Group(string,... HandlerFunc)*github.com/gin-gonic/gin.RouterGroup
++GetOptionalgroup()*gin/testdata/protoexample.Test_OptionalGroup
+)!(string=+Use(... HandlerFunc)gin.IRoutes<font color=red>========>interface</font>
++Group(string,... HandlerFunc)*gin.RouterGroup
 +BasePath()string
--handle(string,string,HandlersChain)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
-+Handle(string,string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
-+POST(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
-+GET(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
-+DELETE(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
-+PATCH(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
-+PUT(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
-+OPTIONS(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
-+HEAD(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
-+Any(string,... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
-+StaticFile(string,string)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
-+Static(string,string)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
-+StaticFS(string,net/http.FileSystem)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
+-handle(string,string,HandlersChain)gin.IRoutes<font color=red>========>interface</font>
++Handle(string,string,... HandlerFunc)gin.IRoutes<font color=red>========>interface</font>
++POST(string,... HandlerFunc)gin.IRoutes<font color=red>========>interface</font>
++GET(string,... HandlerFunc)gin.IRoutes<font color=red>========>interface</font>
++DELETE(string,... HandlerFunc)gin.IRoutes<font color=red>========>interface</font>
++PATCH(string,... HandlerFunc)gin.IRoutes<font color=red>========>interface</font>
++PUT(string,... HandlerFunc)gin.IRoutes<font color=red>========>interface</font>
++OPTIONS(string,... HandlerFunc)gin.IRoutes<font color=red>========>interface</font>
++HEAD(string,... HandlerFunc)gin.IRoutes<font color=red>========>interface</font>
++Any(string,... HandlerFunc)gin.IRoutes<font color=red>========>interface</font>
++StaticFile(string,string)gin.IRoutes<font color=red>========>interface</font>
++Static(string,string)gin.IRoutes<font color=red>========>interface</font>
++StaticFS(string,net/http.FileSystem)gin.IRoutes<font color=red>========>interface</font>
 -createStaticHandler(string,net/http.FileSystem)HandlerFunc
 -combineHandlers(HandlersChain)HandlersChain
 -calculateAbsolutePath(string)string
--returnObj()github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
+-returnObj()gin.IRoutes<font color=red>========>interface</font>
 )!(string=-reset(net/http.ResponseWriter)
 +WriteHeader(int)
 +WriteHeaderNow()
@@ -267,21 +267,21 @@ namespace github.com\\gin_gonic\\gin {
 +WriteContentType(net/http.ResponseWriter)
 )!(string=+Render(net/http.ResponseWriter)error
 +WriteContentType(net/http.ResponseWriter)
-)!(string=+Instance(string,interface  { })github.com/gin-gonic/gin/render.Render<font color=red>========>interface</font>
+)!(string=+Instance(string,interface  { })gin/render.Render<font color=red>========>interface</font>
 -loadTemplate()*html/template.Template
-)!(string=+Instance(string,interface  { })github.com/gin-gonic/gin/render.Render<font color=red>========>interface</font>
+)!(string=+Instance(string,interface  { })gin/render.Render<font color=red>========>interface</font>
 )!(string=)!(string=+Render(net/http.ResponseWriter)error
 +WriteContentType(net/http.ResponseWriter)
-)!(string=-allocateContext()*github.com/gin-gonic/gin.Context
-+Delims(string,string)*github.com/gin-gonic/gin.Engine
-+SecureJsonPrefix(string)*github.com/gin-gonic/gin.Engine
+)!(string=-allocateContext()*gin.Context
++Delims(string,string)*gin.Engine
++SecureJsonPrefix(string)*gin.Engine
 +LoadHTMLGlob(string)
 +LoadHTMLFiles(... string)
 +SetHTMLTemplate(*html/template.Template)
 +SetFuncMap(html/template.FuncMap)
 +NoRoute(... HandlerFunc)
 +NoMethod(... HandlerFunc)
-+Use(... HandlerFunc)github.com/gin-gonic/gin.IRoutes<font color=red>========>interface</font>
++Use(... HandlerFunc)gin.IRoutes<font color=red>========>interface</font>
 -rebuild404Handlers()
 -rebuild405Handlers()
 -addRoute(string,string,HandlersChain)
@@ -290,11 +290,11 @@ namespace github.com\\gin_gonic\\gin {
 +RunTLS(string,string,string)error
 +RunUnix(string)error
 +ServeHTTP(net/http.ResponseWriter,*net/http.Request)
-+HandleContext(*github.com/gin-gonic/gin.Context)
--handleHTTPRequest(*github.com/gin-gonic/gin.Context)
++HandleContext(*gin.Context)
+-handleHTTPRequest(*gin.Context)
 )!(string=)!(string=+Readdir(int)([]os.FileInfo,error)
 )!(string=+Open(string)(net/http.File,error)
-)!(string=)!(string=+SayHello(golang.org/x/net/context.Context,*github.com/gin-gonic/gin/examples/grpc/pb.HelloRequest,... google.golang.org/grpc.CallOption)(*github.com/gin-gonic/gin/examples/grpc/pb.HelloReply,error)
+)!(string=)!(string=+SayHello(golang.org/x/net/context.Context,*gin/examples/grpc/pb.HelloRequest,... google.golang.org/grpc.CallOption)(*gin/examples/grpc/pb.HelloReply,error)
 )!(string=+Reset()
 +String()string
 +ProtoMessage()
@@ -303,9 +303,9 @@ namespace github.com\\gin_gonic\\gin {
 +String()string
 +ProtoMessage()
 +Descriptor()([]byte,[]int)
-)!(string=+SayHello(context.Context,*github.com/gin-gonic/gin/examples/grpc/pb.HelloRequest)(*github.com/gin-gonic/gin/examples/grpc/pb.HelloReply,error)
-)!(string=)!(string=+SetType(ErrorType)*github.com/gin-gonic/gin.Error
-+SetMeta(interface  { })*github.com/gin-gonic/gin.Error
+)!(string=+SayHello(context.Context,*gin/examples/grpc/pb.HelloRequest)(*gin/examples/grpc/pb.HelloReply,error)
+)!(string=)!(string=+SetType(ErrorType)*gin.Error
++SetMeta(interface  { })*gin.Error
 +JSON()interface  { }
 +MarshalJSON()([]byte,error)
 +Error()string

@@ -4,8 +4,9 @@ import (
 	"net/http"
 	"reflect"
 
-	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
+	"gin"
+	"gin/binding"
+
 	validator "gopkg.in/go-playground/validator.v8"
 )
 

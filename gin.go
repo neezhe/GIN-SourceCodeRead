@@ -11,7 +11,7 @@ import (
 	"os"
 	"sync"
 
-	"github.com/gin-gonic/gin/render"
+	"gin/render"
 )
 
 const defaultMultipartMemory = 32 << 20 // 32 MB
@@ -48,9 +48,9 @@ type RoutesInfo []RouteInfo
 
 // Engine is the framework's instance, it contains the muxer, middleware and configuration settings.
 // Create an instance of Engine, by using New() or Default()
-type Engine struct {//为何不直接把RouterGroup中的方法放到Engine中，这样是因为“路由”和“引擎”毕竟是两个逻辑，使用继承的方式有利于代码逻辑分离。并且gin还定义了接口IRoutes来表示RouterGroup实现的方法。
-	RouterGroup  //RouterGroup 描述的是路由的一个父类，里面包含了父节点的一些属性,Engine就继承RouterGroup,为的就是往树中添加节点，这个对象有请求方法的具体实现
-//接下来就是几个bool类型的变量，主要是对重定向、转发等一些属性的控制
+type Engine struct { //为何不直接把RouterGroup中的方法放到Engine中，这样是因为“路由”和“引擎”毕竟是两个逻辑，使用继承的方式有利于代码逻辑分离。并且gin还定义了接口IRoutes来表示RouterGroup实现的方法。
+	RouterGroup //RouterGroup 描述的是路由的一个父类，里面包含了父节点的一些属性,Engine就继承RouterGroup,为的就是往树中添加节点，这个对象有请求方法的具体实现
+	//接下来就是几个bool类型的变量，主要是对重定向、转发等一些属性的控制
 	// Enables automatic redirection if the current route can't be matched but a
 	// handler for the path with (without) the trailing slash exists.
 	// For example if /foo/ is requested but a route only exists for /foo, the
@@ -92,7 +92,7 @@ type Engine struct {//为何不直接把RouterGroup中的方法放到Engine中�
 
 	// Value of 'maxMemory' param that is given to http.Request's ParseMultipartForm
 	// method call.
-	MaxMultipartMemory int64   //从http.Request当中解析处理的最大内存上限
+	MaxMultipartMemory int64 //从http.Request当中解析处理的最大内存上限
 
 	delims           render.Delims
 	secureJsonPrefix string
@@ -100,12 +100,12 @@ type Engine struct {//为何不直接把RouterGroup中的方法放到Engine中�
 	FuncMap          template.FuncMap
 	allNoRoute       HandlersChain
 	allNoMethod      HandlersChain
-	noRoute          HandlersChain  //存的啥？竟然是小写，那么别的包就无法使用,只能gin包能用
-	noMethod         HandlersChain//存的啥？
-	pool             sync.Pool  //标准库的，Gin框架里面对于服务器处理请求定义的一个线程池模型，里面包含了线程池的最大上限，以及每个线程的同步异步处理。详情请细读pool源码
-	trees            methodTrees  //Redix树结构进行存储路由信息，(基数树) 其实就差不多是传统的二叉树，只是在寻找方式上，利用比如一个unsigned int的类型的每一个比特位作为树节点的判断。
-//每种get,post等都有一棵树，每来一个就向相应的树中增加一个节点，
-//那么具体往这个trees中增加路由怎么增加呢？这里选择使用一个结构RouterGroup（有各种get/post...的方法）,那么Engine就继承RouterGroup
+	noRoute          HandlersChain //存的啥？竟然是小写，那么别的包就无法使用,只能gin包能用
+	noMethod         HandlersChain //存的啥？
+	pool             sync.Pool     //标准库的，Gin框架里面对于服务器处理请求定义的一个线程池模型，里面包含了线程池的最大上限，以及每个线程的同步异步处理。详情请细读pool源码
+	trees            methodTrees   //Redix树结构进行存储路由信息，(基数树) 其实就差不多是传统的二叉树，只是在寻找方式上，利用比如一个unsigned int的类型的每一个比特位作为树节点的判断。
+	//每种get,post等都有一棵树，每来一个就向相应的树中增加一个节点，
+	//那么具体往这个trees中增加路由怎么增加呢？这里选择使用一个结构RouterGroup（有各种get/post...的方法）,那么Engine就继承RouterGroup
 }
 
 var _ IRouter = &Engine{}
@@ -118,9 +118,9 @@ var _ IRouter = &Engine{}
 // - ForwardedByClientIP:    true
 // - UseRawPath:             false
 // - UnescapePathValues:     true
-func New() *Engine {  //注意此函数和下面旁边的Default()函数都是用来生成一个Engine的，只不过Default()函数使用了默认的Logger(), Recovery()中间件函数
+func New() *Engine { //注意此函数和下面旁边的Default()函数都是用来生成一个Engine的，只不过Default()函数使用了默认的Logger(), Recovery()中间件函数
 	debugPrintWARNINGNew()
-	engine := &Engine{  //第一步，构造了Engine对象，并传入了所需参数。
+	engine := &Engine{ //第一步，构造了Engine对象，并传入了所需参数。
 		RouterGroup: RouterGroup{
 			Handlers: nil,
 			basePath: "/",
@@ -139,23 +139,23 @@ func New() *Engine {  //注意此函数和下面旁边的Default()函数都是�
 		delims:                 render.Delims{Left: "{{", Right: "}}"},
 		secureJsonPrefix:       "while(1);",
 	}
-	engine.RouterGroup.engine = engine //第二步，将engine自身的父类指向了自己，因为这里并没有对路由进行分组。
-	engine.pool.New = func() interface{} {  //第三步，将pool的New变量指向了一个匿名函数，并返回了包含有engine的Context。
-		return engine.allocateContext()  //pool.New指定一个返回对象的方法，主要用于当池里没有临时对象的时候，就用这个方法return一个对象。get put为操作池的方法。
+	engine.RouterGroup.engine = engine     //第二步，将engine自身的父类指向了自己，因为这里并没有对路由进行分组。
+	engine.pool.New = func() interface{} { //第三步，将pool的New变量指向了一个匿名函数，并返回了包含有engine的Context。
+		return engine.allocateContext() //pool.New指定一个返回对象的方法，主要用于当池里没有临时对象的时候，就用这个方法return一个对象。get put为操作池的方法。
 	}
 	return engine
 }
 
 // Default returns an Engine instance with the Logger and Recovery middleware already attached.
 func Default() *Engine {
-	debugPrintWARNINGDefault()//就打印两行信息，表示进入
+	debugPrintWARNINGDefault() //就打印两行信息，表示进入
 	engine := New()
-	engine.Use(Logger(), Recovery())  //这里实际上是传入了默认的中间件，日志和基本异常处理。主要是对请求参数的打印/将异常信息输出到日志中
+	engine.Use(Logger(), Recovery()) //这里实际上是传入了默认的中间件，日志和基本异常处理。主要是对请求参数的打印/将异常信息输出到日志中
 	return engine
 }
 
 func (engine *Engine) allocateContext() *Context {
-	return &Context{engine: engine}  //Context里面包含了请求的一系列参数
+	return &Context{engine: engine} //Context里面包含了请求的一系列参数
 }
 
 // Delims sets template left and right delims and returns a Engine instance.
@@ -229,14 +229,14 @@ func (engine *Engine) NoMethod(handlers ...HandlerFunc) {
 // For example, this is the right place for a logger or error management middleware.
 func (engine *Engine) Use(middleware ...HandlerFunc) IRoutes { //可变参数，表示可以添加多个中间件的组件，组建指的是函数句柄，默认只使用了recovery和logger
 	engine.RouterGroup.Use(middleware...) //把中间件函数append到engine.RouterGroup.Handlers。noRoute和noMethod是未知路由和未知方法的处理函数，可以像中间件一样自己实现。
-	engine.rebuild404Handlers() //把engine.noRoute拷贝到RouterGroup.Handlers，Handlers就成了中间件函数+noRoute函数,显然此处的noRoute和noMethod函数都是空的。
-	engine.rebuild405Handlers()//把engine.noMethod拷贝到RouterGroup.Handlers，Handlers就成了中间件函数+noRoute函数+noMethod函数
+	engine.rebuild404Handlers()           //把engine.noRoute拷贝到RouterGroup.Handlers，Handlers就成了中间件函数+noRoute函数,显然此处的noRoute和noMethod函数都是空的。
+	engine.rebuild405Handlers()           //把engine.noMethod拷贝到RouterGroup.Handlers，Handlers就成了中间件函数+noRoute函数+noMethod函数
 	//debugPrint("===================", engine.RouterGroup.Handlers)
 	return engine
 }
 
 func (engine *Engine) rebuild404Handlers() {
-	engine.allNoRoute = engine.combineHandlers(engine.noRoute)//engine可以调用其父类RouterGroup中的方法combineHandlers，
+	engine.allNoRoute = engine.combineHandlers(engine.noRoute) //engine可以调用其父类RouterGroup中的方法combineHandlers，
 }
 
 func (engine *Engine) rebuild405Handlers() {
@@ -250,8 +250,8 @@ func (engine *Engine) addRoute(method, path string, handlers HandlersChain) {
 
 	debugPrintRoute(method, path, handlers)
 	root := engine.trees.get(method) //找到method的这个小树，并返回这棵树的根节点（node结构体）
-	if root == nil {//如果为空，那么我就是这棵小树的第一个节点。
-		root = new(node) //go 自带的new函数，新生成一个node结构体
+	if root == nil {                 //如果为空，那么我就是这棵小树的第一个节点。
+		root = new(node)                                                            //go 自带的new函数，新生成一个node结构体
 		engine.trees = append(engine.trees, methodTree{method: method, root: root}) //trees是一个数组，即每一个method都有一个tree
 	}
 	root.addRoute(path, handlers) //把。httprouter中构造基数树的核心方法是addRoute, 其公共方法Get, Post只是对addRoute的一个调用
@@ -284,7 +284,7 @@ func iterate(path, method string, routes RoutesInfo, root *node) RoutesInfo {
 // Run attaches the router to a http.Server and starts listening and serving HTTP requests.
 // It is a shortcut for http.ListenAndServe(addr, router)
 // Note: this method will block the calling goroutine indefinitely unless an error happens.
-func (engine *Engine) Run(addr ...string) (err error) {//可以接受任意个string参数，可以for来遍历addr
+func (engine *Engine) Run(addr ...string) (err error) { //可以接受任意个string参数，可以for来遍历addr
 	defer func() { debugPrintError(err) }()
 
 	address := resolveAddress(addr) //1。得到配置的地址以及端口
@@ -324,20 +324,21 @@ func (engine *Engine) RunUnix(file string) (err error) {
 	err = http.Serve(listener, engine)
 	return
 }
+
 //http包装了内部TCP连接和报文解析的复杂琐碎的细节，使用者只需要和 http.request 和 http.ResponseWriter 两个对象交互就行。
 // 也就是说，我们只要写一个 handler（即实现了ServeHTTP的handler），请求会通过参数传递进来，而它要做的就是根据请求的数据做处理，把结果写到 Response 中。
 func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) { //这里就是我们的入口，第一个参数是interface封装的，这两个传入参数都会存入context
-//这里ServeHTTP的方法传递的两个参数，一个是Request，一个是ResponseWriter，Engine中的ServeHTTP的方法就是要对这两个对象进行读取或者写入操作。
-//而且这两个对象往往是需要同时存在的，为了避免很多函数都需要写这两个参数，我们不如封装一个结构来把这两个对象放在里面：Context	（相当于一个全局的存在）
-// 从上下文对象池中获取一个上下文对象
+	//这里ServeHTTP的方法传递的两个参数，一个是Request，一个是ResponseWriter，Engine中的ServeHTTP的方法就是要对这两个对象进行读取或者写入操作。
+	//而且这两个对象往往是需要同时存在的，为了避免很多函数都需要写这两个参数，我们不如封装一个结构来把这两个对象放在里面：Context	（相当于一个全局的存在）
+	// 从上下文对象池中获取一个上下文对象
 	c := engine.pool.Get().(*Context) //Context这个上下文对象是在对象池里面取出来的，而不是每次都生成，提高效率，节省对象频繁创建和销毁的代价
-	c.writermem.reset(w)// 初始化上下文对象，因为从对象池取出来的数据，有脏数据，故要初始化。将http.ResponseWriter赋值给responseWriter
+	c.writermem.reset(w)              // 初始化上下文对象，因为从对象池取出来的数据，有脏数据，故要初始化。将http.ResponseWriter赋值给responseWriter
 	c.Request = req
 	c.reset()
 
-	engine.handleHTTPRequest(c)//处理web请求，不同的路由有不同的请求处理，那么是怎样调用的？
+	engine.handleHTTPRequest(c) //处理web请求，不同的路由有不同的请求处理，那么是怎样调用的？
 
-	engine.pool.Put(c)  //上面处理完后此处将Context对象扔回对象池了
+	engine.pool.Put(c) //上面处理完后此处将Context对象扔回对象池了
 }
 
 // HandleContext re-enter a context that has been rewritten.
@@ -368,13 +369,13 @@ func (engine *Engine) handleHTTPRequest(c *Context) { //在请求进来的时候
 		}
 		root := t[i].root
 		// Find route in tree
-		handlers, params, tsr := root.getValue(path, c.Params, unescape)// 找到路由对应的处理函数们
-//每个请求进来，匹配好路由之后，会获取这个路由最终combine的handlers，把它放在全局的context中（下面的c.handlers），然后通过
-// 调用context.Next()来进行递归调用这个handlers（即c.handlers）。当然在中间件里面需要记得调用context.Next() 把控制权还给Context。
-		if handlers != nil {  // // handlers 存在，调用处理函数
+		handlers, params, tsr := root.getValue(path, c.Params, unescape) // 找到路由对应的处理函数们
+		//每个请求进来，匹配好路由之后，会获取这个路由最终combine的handlers，把它放在全局的context中（下面的c.handlers），然后通过
+		// 调用context.Next()来进行递归调用这个handlers（即c.handlers）。当然在中间件里面需要记得调用context.Next() 把控制权还给Context。
+		if handlers != nil { // // handlers 存在，调用处理函数
 			c.handlers = handlers
 			c.Params = params
-			c.Next() //// 从第一个 handler 开始调用
+			c.Next()                     //// 从第一个 handler 开始调用
 			c.writermem.WriteHeaderNow() // 写 Header
 			return
 		}
@@ -383,7 +384,7 @@ func (engine *Engine) handleHTTPRequest(c *Context) { //在请求进来的时候
 				redirectTrailingSlash(c)
 				return
 			}
-			if engine.RedirectFixedPath && redirectFixedPath(c, root, engine.RedirectFixedPath) {// 如果不需要尾重定向但是配置了重定向固定 path, 重定向到固定 path
+			if engine.RedirectFixedPath && redirectFixedPath(c, root, engine.RedirectFixedPath) { // 如果不需要尾重定向但是配置了重定向固定 path, 重定向到固定 path
 				return
 			}
 		}
